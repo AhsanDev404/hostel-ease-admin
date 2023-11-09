@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,10 +6,20 @@ import * as yup from "yup";
 import { FaUser, FaLock } from "react-icons/fa";
 import { AiTwotoneEye, AiTwotoneEyeInvisible } from "react-icons/ai";
 import Link from "next/link";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { app ,db } from "@/utils/firbase";
+import ErrorModal from "@/components/ErrorModal";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/slices/authSlice";
+import { doc, setDoc } from "@firebase/firestore";
+import { useRouter } from "next/navigation";
 
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup.string().required("Password is required").min(8, "Password must be at least 8 characters"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
@@ -17,15 +27,46 @@ const schema = yup.object().shape({
 });
 
 const SignupPage = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const auth = getAuth(app);
+  const [error, setError] = useState(null);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
-    // Handle signup logic here
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      const user = userCredential.user;
+      await setDoc(doc(db, "users", user.uid), {
+        userId: user.uid,
+        role: "manager",
+      });
+      const userData = {
+        uid: user.uid,
+        email: user.email,
+        role:"manager"
+        // Add more user details here if needed
+      };
+      dispatch(setUser(userData));
+     
+      router.push('/manager')
+
+      return user;
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
@@ -43,18 +84,23 @@ const SignupPage = () => {
               <Controller
                 name="email"
                 control={control}
+                defaultValue="" // Set default value if needed
                 render={({ field }) => (
                   <input
                     {...field}
                     type="email"
                     placeholder="Email"
-                    className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+                    className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${
+                      errors.email ? "border-red-500" : "border-gray-300"
+                    }`}
                   />
                 )}
               />
             </div>
             {errors.email && (
-              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
           <div className="mb-6">
@@ -65,13 +111,16 @@ const SignupPage = () => {
               <div className="relative w-full">
                 <Controller
                   name="password"
+                  defaultValue=""
                   control={control}
                   render={({ field }) => (
                     <input
                       {...field}
                       type={showPassword ? "text" : "password"}
                       placeholder="Password"
-                      className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${
+                        errors.password ? "border-red-500" : "border-gray-300"
+                      }`}
                     />
                   )}
                 />
@@ -80,13 +129,19 @@ const SignupPage = () => {
                   className="absolute right-2 top-2 text-gray-400"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <AiTwotoneEyeInvisible fontSize={20} /> : <AiTwotoneEye fontSize={20} />}
+                  {showPassword ? (
+                    <AiTwotoneEyeInvisible fontSize={20} />
+                  ) : (
+                    <AiTwotoneEye fontSize={20} />
+                  )}
                 </button>
               </div>
-              {errors.password && (
-                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-              )}
             </div>
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <div className="mb-6">
             <div className="flex items-center mb-2">
@@ -96,13 +151,18 @@ const SignupPage = () => {
               <div className="relative w-full">
                 <Controller
                   name="confirmPassword"
+                  defaultValue=""
                   control={control}
                   render={({ field }) => (
                     <input
                       {...field}
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm Password"
-                      className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${
+                        errors.confirmPassword
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }`}
                     />
                   )}
                 />
@@ -111,13 +171,19 @@ const SignupPage = () => {
                   className="absolute right-2 top-2 text-gray-400"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  {showConfirmPassword ? <AiTwotoneEyeInvisible fontSize={20} /> : <AiTwotoneEye fontSize={20} />}
+                  {showConfirmPassword ? (
+                    <AiTwotoneEyeInvisible fontSize={20} />
+                  ) : (
+                    <AiTwotoneEye fontSize={20} />
+                  )}
                 </button>
               </div>
-              {errors.confirmPassword && (
-                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
-              )}
             </div>
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.confirmPassword.message}
+              </p>
+            )}
           </div>
           <button
             type="submit"
@@ -135,6 +201,7 @@ const SignupPage = () => {
           </p>
         </div>
       </div>
+      {error && <ErrorModal message={error} onClose={() => setError(null)} />}
     </div>
   );
 };
