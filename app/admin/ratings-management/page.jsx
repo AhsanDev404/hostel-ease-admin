@@ -18,7 +18,7 @@ const hostelsData = [
     managerName: "Jane Smith",
     managerEmail: "jane@example.com",
     status: "Active",
-    rating: 4.2,
+    rating: 4.0,
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const hostelsData = [
     managerName: "Alice Johnson",
     managerEmail: "alice@example.com",
     status: "Inactive",
-    rating: 3.8,
+    rating: 3.5,
   },
   {
     id: 4,
@@ -34,7 +34,7 @@ const hostelsData = [
     managerName: "Bob Brown",
     managerEmail: "bob@example.com",
     status: "Active",
-    rating: 4.7,
+    rating: 4.5,
   },
   {
     id: 5,
@@ -42,7 +42,7 @@ const hostelsData = [
     managerName: "Eva White",
     managerEmail: "eva@example.com",
     status: "Active",
-    rating: 4.9,
+    rating: 5.0,
   },
   {
     id: 6,
@@ -58,7 +58,7 @@ const hostelsData = [
     managerName: "Grace Davis",
     managerEmail: "grace@example.com",
     status: "Active",
-    rating: 4.1,
+    rating: 4.0,
   },
   {
     id: 8,
@@ -66,7 +66,7 @@ const hostelsData = [
     managerName: "Henry Lee",
     managerEmail: "henry@example.com",
     status: "Inactive",
-    rating: 3.9,
+    rating: 4.0,
   },
   {
     id: 9,
@@ -74,7 +74,7 @@ const hostelsData = [
     managerName: "Ivy Martin",
     managerEmail: "ivy@example.com",
     status: "Active",
-    rating: 4.3,
+    rating: 4.5,
   },
   {
     id: 10,
@@ -82,10 +82,11 @@ const hostelsData = [
     managerName: "Jack Johnson",
     managerEmail: "jack@example.com",
     status: "Active",
-    rating: 4.6,
+    rating: 4.5,
   },
   // Add more hostels as needed
 ];
+
 
 
 const AdminPanel = () => {
