@@ -79,13 +79,7 @@ const AdminSidebar = () => {
             </p>
           </Link>
         </li>
-        <li className="mb-4">
-          <Link href="/admin/feedback-management">
-            <p className="flex items-center text-white hover:text-gray-300">
-              <FaComments className="mr-2" /> Feedback Management
-            </p>
-          </Link>
-        </li>
+        
         <li className="mb-4">
           <Link href="/admin/carousel-management">
             <p className="flex items-center text-white hover:text-gray-300">
