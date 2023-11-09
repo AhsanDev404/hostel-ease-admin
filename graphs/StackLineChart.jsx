@@ -64,7 +64,7 @@ const StackedLineChart = ({ data }) => {
           bottom: 0,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
+        
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
