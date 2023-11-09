@@ -1,9 +1,10 @@
 'use client'
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FaUser, FaLock } from "react-icons/fa";
+import { AiTwotoneEye,AiTwotoneEyeInvisible } from "react-icons/ai";
 import Link from "next/link";
 
 const schema = yup.object().shape({
@@ -12,6 +13,7 @@ const schema = yup.object().shape({
 });
 
 const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
@@ -55,18 +57,27 @@ const LoginPage = () => {
               <label className="block text-sm text-gray-600 mr-3">
                 <FaLock />
               </label>
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <input
-                    {...field}
-                    type="password"
-                    placeholder="Password"
-                    className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
-                  />
-                )}
-              />
+              <div className="relative w-full">
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Password"
+                      className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+                    />
+                  )}
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-2 text-gray-400"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <AiTwotoneEyeInvisible fontSize={20} />:<AiTwotoneEye fontSize={20} />}
+                </button>
+              </div>
             </div>
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
