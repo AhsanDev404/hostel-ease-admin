@@ -34,7 +34,7 @@ const LoginPage = () => {
             const userDocSnapshot = await getDoc(userDocRef);
             const userData = userDocSnapshot.data();
             const userRole = userData.role;
-            
+
             dispatch(
               setUser({
                 uid: user.uid,
@@ -56,10 +56,10 @@ const LoginPage = () => {
         console.error(error);
       }
     };
-  
+
     meData();
   }, []); // Empty dependency array ensures the effect runs once after the initial render
-  
+
   const dispatch = useDispatch();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
@@ -106,7 +106,6 @@ const LoginPage = () => {
       setError(error.message);
     }
   };
-  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
