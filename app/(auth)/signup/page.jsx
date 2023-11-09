@@ -1,14 +1,15 @@
 'use client'
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
+import { FaUser, FaLock } from "react-icons/fa";
+import { AiTwotoneEye, AiTwotoneEyeInvisible } from "react-icons/ai";
 import Link from "next/link";
 
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup.string().required("Password is required"),
+  password: yup.string().required("Password is required").min(8, "Password must be at least 8 characters"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
@@ -16,11 +17,9 @@ const schema = yup.object().shape({
 });
 
 const SignupPage = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -63,44 +62,62 @@ const SignupPage = () => {
               <label className="block text-sm text-gray-600 mr-3">
                 <FaLock />
               </label>
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <input
-                    {...field}
-                    type="password"
-                    placeholder="Password"
-                    className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
-                  />
-                )}
-              />
+              <div className="relative w-full">
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Password"
+                      className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+                    />
+                  )}
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-2 text-gray-400"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <AiTwotoneEyeInvisible fontSize={20} /> : <AiTwotoneEye fontSize={20} />}
+                </button>
+              </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+              )}
             </div>
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-            )}
           </div>
           <div className="mb-6">
             <div className="flex items-center mb-2">
               <label className="block text-sm text-gray-600 mr-3">
                 <FaLock />
               </label>
-              <Controller
-                name="confirmPassword"
-                control={control}
-                render={({ field }) => (
-                  <input
-                    {...field}
-                    type="password"
-                    placeholder="Confirm Password"
-                    className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
-                  />
-                )}
-              />
+              <div className="relative w-full">
+                <Controller
+                  name="confirmPassword"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Confirm Password"
+                      className={`w-full py-2 border-b focus:outline-none focus:border-blue-500 ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
+                    />
+                  )}
+                />
+                <button
+                  type="button"
+                  className="absolute right-2 top-2 text-gray-400"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? <AiTwotoneEyeInvisible fontSize={20} /> : <AiTwotoneEye fontSize={20} />}
+                </button>
+              </div>
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
+              )}
             </div>
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
-            )}
           </div>
           <button
             type="submit"
