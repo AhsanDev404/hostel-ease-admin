@@ -13,11 +13,19 @@ const ReservationManagementPage = () => {
   const [reservations, setReservations] = useState(reservationsData);
   const [statusFilter, setStatusFilter] = useState('All'); // 'All', 'Active', 'Inactive'
   const [userIdFilter, setUserIdFilter] = useState('');
-
+  const [searchUserId, setSearchUserId] = useState("");
   const handleStatusFilterChange = (e) => {
     setStatusFilter(e.target.value);
   };
-
+  const handleSearch = () => {
+    const filteredRooms = rooms.filter((room) => {
+      const matchesStatus = statusFilter === "All" || room.status === statusFilter;
+      const matchesUserId =
+        searchUserId === "" || (room.userId !== null && room.userId.toString().includes(searchUserId));
+      return matchesStatus && matchesUserId;
+    });
+    setSearchResults(filteredRooms);
+  };
   const handleUserIdFilterChange = (e) => {
     setUserIdFilter(e.target.value);
   };
@@ -31,29 +39,33 @@ const ReservationManagementPage = () => {
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-4xl font-bold mb-8 text-center">Reservation Management</h1>
-      <div className="flex mb-4">
-        <div className="mr-4">
-          <label className="text-black mr-2">Filter by Status:</label>
-          <select
-            value={statusFilter}
-            onChange={handleStatusFilterChange}
-            className="border border-gray-300 rounded px-2 py-1 text-black"
-          >
-            <option value="All">All</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </select>
-        </div>
-        <div>
-          <label className="text-black mr-2">Filter by User ID:</label>
-          <input
-            type="text"
-            placeholder="Enter User ID"
-            value={userIdFilter}
-            onChange={handleUserIdFilterChange}
-            className="border border-gray-300 rounded px-2 py-1 text-black"
-          />
-        </div>
+      <div className="mb-4">
+        <label className="text-black mr-2">Filter by Status:</label>
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="border border-gray-300 rounded px-2 py-1 text-black"
+        >
+          <option value="All">All</option>
+          <option value="Reserved">Reserved</option>
+          <option value="Not Reserved">Not Reserved</option>
+        </select>
+      </div>
+      <div className="mb-4 flex items-center">
+        <label className="text-black mr-2">Search by User ID:</label>
+        <input
+          type="text"
+          placeholder="Enter User ID"
+          value={searchUserId}
+          onChange={(e) => setSearchUserId(e.target.value)}
+          className="border border-gray-300 rounded px-2 py-1 mr-2"
+        />
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-gray-800 text-white border rounded-lg overflow-hidden">
