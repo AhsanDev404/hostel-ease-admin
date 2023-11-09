@@ -40,7 +40,7 @@ const ManagerSidebar = () => {
         </li>
 
         <li className="mb-4">
-          <Link href="/admin/booking-management">
+          <Link href="/manager/reservation-management">
             <p className="flex items-center text-white hover:text-gray-300">
               <FaBook className="mr-2" /> Reservation Management
             </p>
@@ -48,7 +48,7 @@ const ManagerSidebar = () => {
         </li>
 
         <li className="mb-4">
-          <Link href="/admin/profile">
+          <Link href="/manager/profile">
             <p className="flex items-center text-white hover:text-gray-300">
               <FaUserCircle className="mr-2" /> Profile
             </p>
