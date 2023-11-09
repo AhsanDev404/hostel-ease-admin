@@ -21,7 +21,7 @@ import {
 const ManagerSidebar = () => {
   return (
     <div className="w-80 h-screen bg-gray-800 text-white sticky top-0 left-0  flex flex-col items-center p-6">
-      <div className="text-2xl font-bold mb-8">Admin Panel</div>
+      <div className="text-2xl font-bold mb-8">Manager Panel</div>
       <ul className="w-full">
         <li className="mb-4">
           <Link href="/manager">
