@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+
 const citiesData = [
   { id: 1, name: 'New York' },
   { id: 2, name: 'Los Angeles' },
@@ -8,6 +9,7 @@ const citiesData = [
   { id: 5, name: 'San Francisco' },
   // Add more cities as needed
 ];
+
 const AdminPanel = () => {
   const [cities, setCities] = useState(citiesData);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,6 +23,11 @@ const AdminPanel = () => {
     setIsModalOpen(false);
     // Clear the input field
     setNewCityName('');
+  };
+
+  const handleDeleteCity = (id) => {
+    const updatedCities = cities.filter(city => city.id !== id);
+    setCities(updatedCities);
   };
 
   return (
@@ -38,6 +45,7 @@ const AdminPanel = () => {
             <tr>
               <th className="py-3 px-4 text-left">ID</th>
               <th className="py-3 px-4 text-left">City Name</th>
+              <th className="py-3 px-4 text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +53,14 @@ const AdminPanel = () => {
               <tr key={city.id} className='hover:bg-white hover:text-black'>
                 <td className="py-3 px-4">{city.id}</td>
                 <td className="py-3 px-4">{city.name}</td>
+                <td className="py-3 px-4">
+                  <button
+                    className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded mr-2"
+                    onClick={() => handleDeleteCity(city.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
