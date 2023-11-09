@@ -49,6 +49,7 @@ const Page = () => {
   const handleRoleFilterChange = (e) => {
     setRoleFilter(e.target.value);
   };
+
   const filteredUsers = users.filter(user => {
     if (statusFilter !== 'All' && user.status !== statusFilter) {
       return false;
@@ -101,7 +102,7 @@ const Page = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
+            {filteredUsers.map(user => (
               <tr key={user.id} className='hover:bg-white hover:text-black'>
                 <td className="py-3 px-4">{user.id}</td>
                 <td className="py-3 px-4">{user.email}</td>
