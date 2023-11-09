@@ -61,7 +61,7 @@ const Page = () => {
 
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-8 text-center">User Management</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center">Manager Management</h1>
       <div className="flex mb-4">
         <div className="mr-4">
           <label className="text-black mr-2">Filter by Status:</label>
