@@ -13,7 +13,7 @@ const AdminHeader = () => {
 
   return (
     <header className="bg-gray-800 text-white py-4 px-8 flex items-center justify-between">
-      <h1 className="text-2xl font-bold">My App</h1>
+      <h1 className="text-2xl font-bold">Dashboard</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex items-center ml-4">
         <div className="relative">
           <Controller
