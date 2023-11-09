@@ -1,4 +1,3 @@
-'use client'
 import AdminHeader from "../../components/AdminHeader";
 import AdminSidebar from "../../components/AdminSidebar";
 import React from "react";
