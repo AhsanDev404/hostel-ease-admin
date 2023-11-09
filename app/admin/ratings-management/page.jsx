@@ -90,32 +90,14 @@ const hostelsData = [
 
 const AdminPanel = () => {
   const [hostels, setHostels] = useState(hostelsData);
-  const [statusFilter, setStatusFilter] = useState("All"); // 'All', 'Active', 'Inactive'
-  const [ratingFilter, setRatingFilter] = useState("All"); // 'All', 1, 2, 3, 4, 5
-
-  const handleStatusChange = (hostelId, newStatus) => {
-    const updatedHostels = hostels.map((hostel) => {
-      if (hostel.id === hostelId) {
-        return { ...hostel, status: newStatus };
-      }
-      return hostel;
-    });
-    setHostels(updatedHostels);
-  };
-
-  const handleStatusFilterChange = (e) => {
-    setStatusFilter(e.target.value);
-  };
+  const [ratingFilter, setRatingFilter] = useState('All'); // 'All', 1, 2, 3, 4, 5
 
   const handleRatingFilterChange = (rating) => {
     setRatingFilter(rating);
   };
 
   const filteredHostels = hostels.filter((hostel) => {
-    if (statusFilter !== "All" && hostel.status !== statusFilter) {
-      return false;
-    }
-    if (ratingFilter !== "All" && hostel.rating !== parseFloat(ratingFilter)) {
+    if (ratingFilter !== 'All' && hostel.rating < parseFloat(ratingFilter)) {
       return false;
     }
     return true;
