@@ -114,8 +114,8 @@ const Page = () => {
                     onChange={e => handleRoleChange(user.id, e.target.value)}
                     className="border border-gray-300 rounded px-2 py-1 text-black"
                   >
-                    <option value="Admin">Admin</option>
                     <option value="Manger">Manager</option>
+                    <option value="Admin">Admin</option>
                   </select>
                 </td>
                 <td className="py-3 px-4">
