@@ -1,4 +1,7 @@
+import { setUser } from "@/redux/slices/authSlice";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import {
   FaHome,
@@ -17,8 +20,23 @@ import {
   FaUserCircle,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 
 const AdminSidebar = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const logout = async () => {
+    try {
+      const auth  = getAuth()
+      await signOut(auth);
+      dispatch(setUser(null));
+      router.push('/'); 
+     
+    } catch (authStateChangedError) {
+      console.error('Error in onAuthStateChanged:', authStateChangedError);
+    }
+  };
+  
   return (
     <div className="w-80 h-screen bg-gray-800 text-white sticky top-0 left-0  flex flex-col items-center p-6">
       <div className="text-2xl font-bold mb-8">Admin Panel</div>
@@ -96,7 +114,7 @@ const AdminSidebar = () => {
         </li>
         <li className="mb-4">
           
-            <button className="flex items-center text-white hover:text-gray-300">
+            <button onClick={()=>logout()} className="flex items-center text-white hover:text-gray-300">
               <FaSignOutAlt className="mr-2" /> Logout
             </button>
       
