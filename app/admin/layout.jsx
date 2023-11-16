@@ -9,7 +9,7 @@ export default function AdminLayout({ children }) {
   const user = useSelector((state) => state.auth.user);
   return (
     <div>
-      {user?.role === "admin" ? (
+      {/* {user?.role === "admin" ? (
         <div className="flex">
           <AdminSidebar />
           <div className="w-full">
@@ -19,7 +19,14 @@ export default function AdminLayout({ children }) {
         </div>
       ) : (
         <NotFound />
-      )}
+      )} */}
+       <div className="flex">
+          <AdminSidebar />
+          <div className="w-full">
+            <AdminHeader />
+            {children}
+          </div>
+        </div>
     </div>
   );
 }

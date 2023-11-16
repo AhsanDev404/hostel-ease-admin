@@ -25,41 +25,6 @@ const schema = yup.object().shape({
 });
 
 const LoginPage = () => {
-  useEffect(() => {
-    const meData = async () => {
-      try {
-        onAuthStateChanged(auth, async (user) => {
-          if (user) {
-            const userDocRef = doc(db, "users", user.uid);
-            const userDocSnapshot = await getDoc(userDocRef);
-            const userData = userDocSnapshot.data();
-            const userRole = userData.role;
-
-            dispatch(
-              setUser({
-                uid: user.uid,
-                email: user.email,
-                role: userRole,
-                // Add more user details here if needed
-              })
-            );
-            if (userRole === "admin") {
-              router.push("/admin");
-            } else if (userRole === "manager") {
-              router.push("/manager");
-            } else {
-              router.push("/not-found");
-            }
-          }
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    meData();
-  }, []); // Empty dependency array ensures the effect runs once after the initial render
-
   const dispatch = useDispatch();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
