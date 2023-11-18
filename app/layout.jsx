@@ -1,6 +1,7 @@
 
 import { Inter } from "next/font/google";
 import "./globals.css";
+import 'react-tooltip/dist/react-tooltip.css'
 import CustomProvider from "@/components/CustomProvider";
 
 export const metadata = {

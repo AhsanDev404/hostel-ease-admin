@@ -1,7 +1,9 @@
 'use client'
 import React, { useState } from 'react';
 import LoadMoreButton from '@/components/LoadMoreButton';
-
+import Link from 'next/link';
+import { FaInfoCircle, FaPowerOff } from 'react-icons/fa';
+import { Tooltip } from 'react-tooltip'
 const hostelsData = [
   { id: 1, name: 'Hostel A', managerName: 'John Doe', managerEmail: 'john@example.com', status: 'Active' },
   { id: 2, name: 'Hostel B', managerName: 'Jane Smith', managerEmail: 'jane@example.com', status: 'Inactive' },
@@ -18,10 +20,10 @@ const hostelsData = [
   // Add more hostels as needed
 ];
 
-
 const AdminPanel = () => {
   const [hostels, setHostels] = useState(hostelsData);
   const [statusFilter, setStatusFilter] = useState('All'); // 'All', 'Active', 'Inactive'
+  const [searchInput, setSearchInput] = useState('');
 
   const handleStatusChange = (hostelId, newStatus) => {
     const updatedHostels = hostels.map(hostel => {
@@ -33,13 +35,25 @@ const AdminPanel = () => {
     setHostels(updatedHostels);
   };
 
-  const handleStatusFilterChange = (e) => {
+  const handleStatusFilterChange = e => {
     setStatusFilter(e.target.value);
+  };
+
+  const handleSearchChange = e => {
+    setSearchInput(e.target.value);
   };
 
   const filteredHostels = hostels.filter(hostel => {
     if (statusFilter !== 'All' && hostel.status !== statusFilter) {
       return false;
+    }
+    if (searchInput.trim() !== '') {
+      const searchQuery = searchInput.toLowerCase();
+      return (
+        hostel.name.toLowerCase().includes(searchQuery) ||
+        hostel.managerName.toLowerCase().includes(searchQuery) ||
+        hostel.managerEmail.toLowerCase().includes(searchQuery)
+      );
     }
     return true;
   });
@@ -60,9 +74,19 @@ const AdminPanel = () => {
             <option value="Inactive">Inactive</option>
           </select>
         </div>
+        <div className="mr-4">
+          <label className="text-black mr-2">Search:</label>
+          <input
+            type="text"
+            value={searchInput}
+            onChange={handleSearchChange}
+            className="border border-gray-300 rounded px-2 py-1 text-black"
+            placeholder="Search by name or email..."
+          />
+        </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-gray-800 text-white border rounded-lg overflow-hidden">
+      <table className="min-w-full bg-gray-800 text-white border rounded-lg overflow-hidden">
           <thead className="text-blue-400">
             <tr>
               <th className="py-3 px-4 text-left">ID</th>
@@ -83,16 +107,32 @@ const AdminPanel = () => {
                 <td className={`py-3 px-4 ${hostel.status === 'Active' ? 'text-green-500' : 'text-red-500'}`}>
                   {hostel.status}
                 </td>
-                <td className="py-3 px-4">
-                  <button className="bg-blue-500 ml-3 hover:bg-blue-600 text-white py-1 px-4 rounded"
-                          onClick={() => handleStatusChange(hostel.id, hostel.status === 'Active' ? 'Inactive' : 'Active')}>
-                    {hostel.status === 'Active' ? 'Deactivate' : 'Activate'}
-                  </button>
+                <td className="py-3 px-4 flex">
+                <FaPowerOff
+                data-tooltip-id={`status-${hostel.id}`} data-tooltip-content="Change Status"
+                fontSize={20}
+              className="cursor-pointer text-blue-500 ml-3 hover:text-blue-600"
+              onClick={() =>
+                handleStatusChange(
+                  hostel.id,
+                  hostel.status === 'Active' ? 'Inactive' : 'Active'
+                )
+              }
+            />
+            <Link href={`/admin/hostel-management/${hostel.id}`}>
+              <FaInfoCircle
+              data-tooltip-id={`details-${hostel.id}`} data-tooltip-content="Details"
+                 fontSize={20}
+                className="cursor-pointer text-blue-500 ml-3 hover:text-blue-600"
+              />
+            </Link>
+            <Tooltip id={`details-${hostel.id}`} />
+            <Tooltip id={`status-${hostel.id}`}  />
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </table>  
       </div>
       <LoadMoreButton />
     </div>
