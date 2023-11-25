@@ -6,17 +6,13 @@ const bookingsData = [
     { id: 1, roomNumber: '101', guestName: 'Alice Johnson', checkIn: '2023-11-15', checkOut: '2023-11-18' },
     { id: 2, roomNumber: '102', guestName: 'Bob Brown', checkIn: '2023-11-20', checkOut: '2023-11-25' },
     { id: 3, roomNumber: '103', guestName: 'Eva White', checkIn: '2023-12-01', checkOut: '2023-12-05' },
-    // Add more bookings as needed
+   
   ];
 
 const BookingPage = () => {
   // State for booking data
   const [bookings, setBookings] = useState([...bookingsData]);
 
-
-
-  // Fetch bookings logic or mock data
-  // Fetch data from an API or set mock data as needed
 
   return (
     <div className="container mx-auto p-8">
