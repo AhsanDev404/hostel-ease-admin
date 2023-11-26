@@ -20,6 +20,7 @@ import {
   FaUserCircle,
   FaSignOutAlt,
 } from "react-icons/fa";
+import {FiAlertCircle} from "react-icons/fi"
 import { useDispatch } from "react-redux";
 
 const AdminSidebar = () => {
@@ -59,6 +60,13 @@ const AdminSidebar = () => {
           <Link href="/admin/manager-management">
             <p className="flex items-center text-white hover:text-gray-300">
               <FaCog className="mr-2" /> Manager Management
+            </p>
+          </Link>
+        </li>
+        <li className="mb-4">
+          <Link href="/admin/manager-request">
+            <p className="flex items-center text-white hover:text-gray-300">
+            <FiAlertCircle className="mr-2" /> Manager Request
             </p>
           </Link>
         </li>
