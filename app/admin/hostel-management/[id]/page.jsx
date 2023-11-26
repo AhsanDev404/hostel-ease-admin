@@ -1,13 +1,35 @@
 // BookingPage.js
 'use client'
-// BookingPage.js
 import React, { useState } from 'react';
 
 const bookingsData = [
-  { id: 1, roomNumber: '101', guestName: 'Alice Johnson', checkIn: '2023-11-15', checkOut: '2023-11-18' },
-  { id: 2, roomNumber: '102', guestName: 'Bob Brown', checkIn: '2023-11-20', checkOut: '2023-11-25' },
-  { id: 3, roomNumber: '103', guestName: 'Eva White', checkIn: '2023-12-01', checkOut: '2023-12-05' },
+  { 
+    id: 1, 
+    roomNumber: '101', 
+    guestName: 'Alice Johnson', 
+    checkIn: '2023-11-15', 
+    checkOut: '2023-11-18'
+  },
+  { 
+    id: 2, 
+    roomNumber: '102', 
+    guestName: 'Bob Brown', 
+    checkIn: '2023-11-20', 
+    checkOut: '2023-11-25'
+  },
+  { 
+    id: 3, 
+    roomNumber: '103', 
+    guestName: 'Eva White', 
+    checkIn: '2023-12-01', 
+    checkOut: '2023-12-05'
+  },
 ];
+
+const hostelInfo = {
+  contactNumber: '123-456-7890',
+  address: '123 Main St, City, Country'
+};
 
 const BookingPage = () => {
   // State for booking data
@@ -27,6 +49,11 @@ const BookingPage = () => {
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-4xl font-bold mb-8 text-center">Booking Management</h1>
+      {/* Display hostel contact number and address */}
+      <div className="mb-4">
+        <p>Contact Number: {hostelInfo.contactNumber}</p>
+        <p>Address: {hostelInfo.address}</p>
+      </div>
       {/* Display booking information */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-gray-800 text-white border rounded-lg overflow-hidden">
