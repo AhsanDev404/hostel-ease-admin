@@ -1,101 +1,39 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import LoadMoreButton from "@/components/LoadMoreButton";
 import Link from "next/link";
 import { FaInfoCircle, FaPowerOff } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
+
 const hostelsData = [
   {
     id: 1,
-    name: "Hostel A",
+    name: "Male Hostel A",
     managerName: "John Doe",
     managerEmail: "john@example.com",
     status: "Active",
+    category: "Male",
+    city: "Islamabad",
   },
   {
     id: 2,
-    name: "Hostel B",
+    name: "Female Hostel B",
     managerName: "Jane Smith",
     managerEmail: "jane@example.com",
     status: "Inactive",
+    category: "Female",
+    city: "Lahore",
   },
-  {
-    id: 3,
-    name: "Hostel C",
-    managerName: "Alice Johnson",
-    managerEmail: "alice@example.com",
-    status: "Active",
-  },
-  {
-    id: 4,
-    name: "Hostel D",
-    managerName: "Bob Brown",
-    managerEmail: "bob@example.com",
-    status: "Inactive",
-  },
-  {
-    id: 5,
-    name: "Hostel E",
-    managerName: "Eva White",
-    managerEmail: "eva@example.com",
-    status: "Active",
-  },
-  {
-    id: 6,
-    name: "Hostel F",
-    managerName: "Frank Wilson",
-    managerEmail: "frank@example.com",
-    status: "Inactive",
-  },
-  {
-    id: 7,
-    name: "Hostel G",
-    managerName: "Grace Davis",
-    managerEmail: "grace@example.com",
-    status: "Active",
-  },
-  {
-    id: 8,
-    name: "Hostel H",
-    managerName: "Henry Lee",
-    managerEmail: "henry@example.com",
-    status: "Inactive",
-  },
-  {
-    id: 9,
-    name: "Hostel I",
-    managerName: "Ivy Martin",
-    managerEmail: "ivy@example.com",
-    status: "Active",
-  },
-  {
-    id: 10,
-    name: "Hostel J",
-    managerName: "Jack Johnson",
-    managerEmail: "jack@example.com",
-    status: "Inactive",
-  },
-  {
-    id: 11,
-    name: "Hostel K",
-    managerName: "Karen Smith",
-    managerEmail: "karen@example.com",
-    status: "Active",
-  },
-  {
-    id: 12,
-    name: "Hostel L",
-    managerName: "Larry Brown",
-    managerEmail: "larry@example.com",
-    status: "Inactive",
-  },
-  // Add more hostels as needed
+  // ... (add more hostel records)
 ];
 
 const AdminPanel = () => {
   const [hostels, setHostels] = useState(hostelsData);
-  const [statusFilter, setStatusFilter] = useState("All"); // 'All', 'Active', 'Inactive'
+  const [statusFilter, setStatusFilter] = useState("All");
   const [searchInput, setSearchInput] = useState("");
+  const [hostelCategoryFilter, setHostelCategoryFilter] = useState("All");
+  const [cityFilter, setCityFilter] = useState("All");
+
 
   const handleStatusChange = (hostelId, newStatus) => {
     const updatedHostels = hostels.map((hostel) => {
@@ -115,6 +53,13 @@ const AdminPanel = () => {
     setSearchInput(e.target.value);
   };
 
+  const handleHostelCategoryFilterChange = (e) => {
+    setHostelCategoryFilter(e.target.value);
+  };
+  const handleCityFilterChange = (e) => {
+    setCityFilter(e.target.value);
+  };
+
   const filteredHostels = hostels.filter((hostel) => {
     if (statusFilter !== "All" && hostel.status !== statusFilter) {
       return false;
@@ -126,6 +71,12 @@ const AdminPanel = () => {
         hostel.managerName.toLowerCase().includes(searchQuery) ||
         hostel.managerEmail.toLowerCase().includes(searchQuery)
       );
+    }
+    if (hostelCategoryFilter !== "All" && hostel.category !== hostelCategoryFilter) {
+      return false;
+    }
+    if (cityFilter !== "All" && hostel.city !== cityFilter) {
+      return false;
     }
     return true;
   });
@@ -156,6 +107,32 @@ const AdminPanel = () => {
             placeholder="Search by name or email..."
           />
         </div>
+        <div className="mr-4">
+          <label className="text-black mr-2">Hostel Category:</label>
+          <select
+            value={hostelCategoryFilter}
+            onChange={handleHostelCategoryFilterChange}
+            className="border border-gray-300 rounded px-2 py-1 text-black"
+          >
+            <option value="All">All</option>
+            <option value="Male">Male Hostels</option>
+            <option value="Female">Female Hostels</option>
+          </select>
+        </div>
+        <div className="mr-4">
+          <label className="text-black mr-2">City:</label>
+          <select
+            value={cityFilter}
+            onChange={handleCityFilterChange}
+            className="border border-gray-300 rounded px-2 py-1 text-black"
+          >
+            <option value="All">All</option>
+            {/* Add options for cities */}
+            <option value="Islamabad">Islamabad</option>
+            <option value="Lahore">Lahore</option>
+            {/* Add more cities as needed */}
+          </select>
+        </div>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-gray-800 text-white border rounded-lg overflow-hidden">
@@ -165,6 +142,8 @@ const AdminPanel = () => {
               <th className="py-3 px-4 text-left">Hostel Name</th>
               <th className="py-3 px-4 text-left">Manager Name</th>
               <th className="py-3 px-4 text-left">Manager Email</th>
+              <th className="py-3 px-4 text-left">Category</th>
+              <th className="py-3 px-4 text-left">City</th>
               <th className="py-3 px-4 text-left">Status</th>
               <th className="py-3 px-4 text-left">Actions</th>
             </tr>
@@ -176,11 +155,11 @@ const AdminPanel = () => {
                 <td className="py-3 px-4">{hostel.name}</td>
                 <td className="py-3 px-4">{hostel.managerName}</td>
                 <td className="py-3 px-4">{hostel.managerEmail}</td>
+                <td className="py-3 px-4">{hostel.category}</td>
+                <td className="py-3 px-4">{hostel.city}</td>
                 <td
                   className={`py-3 px-4 ${
-                    hostel.status === "Active"
-                      ? "text-green-500"
-                      : "text-red-500"
+                    hostel.status === "Active" ? "text-green-500" : "text-red-500"
                   }`}
                 >
                   {hostel.status}
