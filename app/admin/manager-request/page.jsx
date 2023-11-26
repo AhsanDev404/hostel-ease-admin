@@ -57,11 +57,16 @@ const Page = () => {
                 <td className="py-3 px-4">{user.email}</td>
                 <td className="py-3 px-4">123-456-7890</td>
                 <td className="py-3 px-4">
-                  <Link href={`/admin/users-management/${user.id}`}>
+                 
                     <button className="bg-blue-500 ml-3 hover:bg-blue-600 text-white py-1 px-4 rounded">
                       Approve
                     </button>
-                  </Link>
+                   <Link href={'/admin/manager-request/1'}>
+                   <button className="bg-blue-500 ml-3 hover:bg-blue-600 text-white py-1 px-4 rounded">
+                      Detail
+                    </button>
+                   </Link>
+                 
                 </td>
               </tr>
             ))}
