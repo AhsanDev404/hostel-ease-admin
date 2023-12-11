@@ -66,7 +66,7 @@ const AdminSidebar = () => {
         <li className="mb-4">
           <Link href="/admin/manager-request">
             <p className="flex items-center text-white hover:text-gray-300">
-            <FiAlertCircle className="mr-2" /> Manager Request
+            <FiAlertCircle className="mr-2" /> Hostel Owner Request
             </p>
           </Link>
         </li>

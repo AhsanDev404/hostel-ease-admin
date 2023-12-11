@@ -28,7 +28,7 @@ const Page = () => {
 
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-8 text-center">Manager Request</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center">Hostel Owner Request</h1>
       <div className="mb-4">
         <input
           type="text"
@@ -60,6 +60,9 @@ const Page = () => {
                  
                     <button className="bg-blue-500 ml-3 hover:bg-blue-600 text-white py-1 px-4 rounded">
                       Approve
+                    </button>
+                    <button className="bg-blue-500 ml-3 hover:bg-blue-600 text-white py-1 px-4 rounded">
+                     Disapprove
                     </button>
                    <Link href={'/admin/manager-request/1'}>
                    <button className="bg-blue-500 ml-3 hover:bg-blue-600 text-white py-1 px-4 rounded">
