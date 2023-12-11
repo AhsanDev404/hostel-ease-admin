@@ -11,12 +11,12 @@ const hostelData = {
   availability: "No of Rooms / Space of Rooms",
   pricePerRoom: "Price per Room",
   photos: ["Photo URL 1", "Photo URL 2", "Photo URL 3"], // Add more photo URLs
-  roomsDetails: {
-    bed: "One big Mattress",
-    extraFacilities: "Geysar / AC / Cooler etc",
-    numberOfPersonsInRoom: 1,
-    paymentMethod: "Pay in Cash / Bank",
-  },
+  // roomsDetails: {
+  //   bed: "One big Mattress",
+  //   extraFacilities: "Geysar / AC / Cooler etc",
+  //   numberOfPersonsInRoom: 1,
+  //   paymentMethod: "Pay in Cash / Bank",
+  // },
 };
 
 const Page = () => {
