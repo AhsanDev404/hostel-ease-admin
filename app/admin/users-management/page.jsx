@@ -15,7 +15,7 @@ const Page = () => {
 
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-8 text-center">User Management</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center">Customer Management</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-gray-800 text-white border rounded-lg overflow-hidden">
           <thead className="text-blue-400">

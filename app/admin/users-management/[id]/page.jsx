@@ -69,7 +69,7 @@ const Page = () => {
   return (
     <div className="container mx-auto p-8">
       <div className="container mx-auto p-8 bg-gray-100">
-      <h1 className="text-4xl font-bold mb-8 text-center">User Information</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center">Customer Information</h1>
       <div className="bg-white shadow-md p-6 rounded-lg mb-8">
         <p className="text-lg">
           <strong>Name:</strong> {userData.name}
@@ -87,7 +87,7 @@ const Page = () => {
           <strong>Gender:</strong> {userData.gender}
         </p>
       </div>
-      <div className="bg-white shadow-md p-6 rounded-lg">
+      {/* <div className="bg-white shadow-md p-6 rounded-lg">
         <h2 className="text-2xl font-semibold mb-4">Complaints</h2>
         <ul className="list-disc list-inside">
           {userData.complaints.map(complaint => (
@@ -96,7 +96,7 @@ const Page = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </div>
       <h1 className="text-4xl font-bold mb-8 text-center">Complaint History</h1>
       <div className="overflow-x-auto">
