@@ -52,7 +52,7 @@ const AdminSidebar = () => {
         <li className="mb-4">
           <Link href="/admin/users-management">
             <p className="flex items-center text-white hover:text-gray-300">
-              <FaUsers className="mr-2" /> Users Management
+              <FaUsers className="mr-2" /> Customer Management
             </p>
           </Link>
         </li>
