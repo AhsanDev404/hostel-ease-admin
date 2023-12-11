@@ -17,6 +17,17 @@ const hostelsData = [
   // Add more hostels with respective details
 ];
 
+const userData = {
+  name: 'John Doe',
+  email: 'johndoe@example.com',
+  hostel: 'Hostel A',
+  complaints: [
+    { id: 1, issue: 'Room cleanliness issue' },
+    { id: 2, issue: 'Noisy neighbors' },
+    // Add more complaints
+  ],
+};
+
 const bookingHistoryData = [
   {
     id: 1,
@@ -55,6 +66,30 @@ const Page = () => {
 
   return (
     <div className="container mx-auto p-8">
+      <div className="container mx-auto p-8 bg-gray-100">
+      <h1 className="text-4xl font-bold mb-8 text-center">User Information</h1>
+      <div className="bg-white shadow-md p-6 rounded-lg mb-8">
+        <p className="text-lg">
+          <strong>Name:</strong> {userData.name}
+        </p>
+        <p className="text-lg">
+          <strong>Email:</strong> {userData.email}
+        </p>
+        <p className="text-lg">
+          <strong>Hostel:</strong> {userData.hostel}
+        </p>
+      </div>
+      <div className="bg-white shadow-md p-6 rounded-lg">
+        <h2 className="text-2xl font-semibold mb-4">Complaints</h2>
+        <ul className="list-disc list-inside">
+          {userData.complaints.map(complaint => (
+            <li key={complaint.id} className="text-lg mb-2">
+              {complaint.issue}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
       <h1 className="text-4xl font-bold mb-8 text-center">Hostel Information</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-gray-800 text-white border rounded-lg overflow-hidden mb-8">
@@ -141,3 +176,7 @@ const Page = () => {
 };
 
 export default Page;
+
+
+
+
