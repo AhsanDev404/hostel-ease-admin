@@ -62,7 +62,9 @@ const BookingPage = () => {
               <th className="py-3 px-4 text-left">ID</th>
               <th className="py-3 px-4 text-left">Room Number</th>
               <th className="py-3 px-4 text-left">Guest Name</th>
-              <th className="py-3 px-4 text-left">Status</th>
+              <th className="py-3 px-4 text-left">Join Date</th>
+              <th className="py-3 px-4 text-left">Guest Name</th>
+              {/* <th className="py-3 px-4 text-left">Status</th> */}
             </tr>
           </thead>
           <tbody>
@@ -72,6 +74,7 @@ const BookingPage = () => {
                 <td className="py-3 px-4">{booking.id}</td>
                 <td className="py-3 px-4">{booking.roomNumber}</td>
                 <td className="py-3 px-4">{booking.guestName}</td>
+                <td className="py-3 px-4">{booking.checkIn}</td>
                 <td className="py-3 px-4">
                   {getRoomStatus(booking.checkIn, booking.checkOut)}
                 </td>
