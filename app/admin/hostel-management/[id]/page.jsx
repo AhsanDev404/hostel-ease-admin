@@ -28,7 +28,8 @@ const bookingsData = [
 
 const hostelInfo = {
   contactNumber: '123-456-7890',
-  address: '123 Main St, City, Country'
+  address: '123 Main St, City, Country',
+  joinDate: '2023-12-05'
 };
 
 const BookingPage = () => {
@@ -53,6 +54,7 @@ const BookingPage = () => {
       <div className="mb-4">
         <p>Contact Number: {hostelInfo.contactNumber}</p>
         <p>Address: {hostelInfo.address}</p>
+        <p>Join Date: {hostelInfo.joinDate}</p>
       </div>
       {/* Display booking information */}
       <div className="overflow-x-auto">
