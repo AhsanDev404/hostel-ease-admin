@@ -21,6 +21,8 @@ const userData = {
   name: 'John Doe',
   email: 'johndoe@example.com',
   hostel: 'Hostel A',
+  contact: '0300000000',
+  gender:"male",
   complaints: [
     { id: 1, issue: 'Room cleanliness issue' },
     { id: 2, issue: 'Noisy neighbors' },
@@ -78,6 +80,12 @@ const Page = () => {
         <p className="text-lg">
           <strong>Hostel:</strong> {userData.hostel}
         </p>
+        <p className="text-lg">
+          <strong>Contact No:</strong> {userData.contact}
+        </p>
+        <p className="text-lg">
+          <strong>Gender:</strong> {userData.gender}
+        </p>
       </div>
       <div className="bg-white shadow-md p-6 rounded-lg">
         <h2 className="text-2xl font-semibold mb-4">Complaints</h2>
@@ -90,7 +98,7 @@ const Page = () => {
         </ul>
       </div>
     </div>
-      <h1 className="text-4xl font-bold mb-8 text-center">Hostel Information</h1>
+      <h1 className="text-4xl font-bold mb-8 text-center">Complaint History</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-gray-800 text-white border rounded-lg overflow-hidden mb-8">
           {/* Hostel Information Table */}
@@ -102,7 +110,7 @@ const Page = () => {
               <th className="py-3 px-4 text-left">Manager Email</th>
               <th className="py-3 px-4 text-left">Complaints</th>
               <th className="py-3 px-4 text-left">Status</th>
-              <th className="py-3 px-4 text-left">Action</th>
+              {/* <th className="py-3 px-4 text-left">Action</th> */}
             </tr>
           </thead>
           <tbody>
@@ -125,14 +133,14 @@ const Page = () => {
                 </div>
               ))}
             </td>
-            <td>
+            {/* <td>
             <button
                     className="bg-blue-500 ml-3 hover:bg-blue-600 text-white py-1 px-4 rounded"
                     onClick={() => handleStatusChange(hostel.id, complaint.id)}
                   >
                     Change Status
                   </button>
-            </td>
+            </td> */}
           </tr>
         ))}
       </tbody>
