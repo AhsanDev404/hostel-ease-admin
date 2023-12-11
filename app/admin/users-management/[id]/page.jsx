@@ -172,7 +172,7 @@ const Page = () => {
                 <td className="py-3 px-4">{booking.managerEmail}</td>
                 <td className="py-3 px-4">{booking.managerName}</td>
                 <td className="py-3 px-4">{booking.startDate}</td>
-                <td className="py-3 px-4">{booking.endDate}</td>
+                <td className="py-3 px-4 text-red-500">{booking.endDate}</td>
               </tr>
             ))}
           </tbody>

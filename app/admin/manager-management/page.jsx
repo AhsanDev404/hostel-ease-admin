@@ -3,18 +3,18 @@ import LoadMoreButton from '@/components/LoadMoreButton';
 import React, { useState } from 'react';
 
 const usersData = [
-  { id: 1, email: 'user1@example.com', role: 'Manager', status: 'Active' },
-  { id: 2, email: 'user2@example.com', role: 'Manager', status: 'Inactive' },
-  { id: 3, email: 'user3@example.com', role: 'Manager', status: 'Active' },
-  { id: 4, email: 'user4@example.com', role: 'Manager', status: 'Inactive' },
-  { id: 5, email: 'user5@example.com', role: 'Manager', status: 'Active' },
-  { id: 6, email: 'user6@example.com', role: 'Manager', status: 'Inactive' },
-  { id: 7, email: 'user7@example.com', role: 'Manager', status: 'Active' },
-  { id: 8, email: 'user8@example.com', role: 'Manager', status: 'Inactive' },
-  { id: 9, email: 'user9@example.com', role: 'Manager', status: 'Active' },
-  { id: 10, email: 'user10@example.com', role: 'Manager', status: 'Inactive' },
-  { id: 11, email: 'user11@example.com', role: 'Manager', status: 'Active' },
-  { id: 12, email: 'user12@example.com', role: 'Manager', status: 'Inactive' }
+  { id: 1, name: 'John Doe', email: 'user1@example.com', role: 'Manager', status: 'Active' },
+  { id: 2, name: 'Jane Smith', email: 'user2@example.com', role: 'Manager', status: 'Inactive' },
+  { id: 3, name: 'Alice Johnson', email: 'user3@example.com', role: 'Manager', status: 'Active' },
+  { id: 4, name: 'Bob Wilson', email: 'user4@example.com', role: 'Manager', status: 'Inactive' },
+  { id: 5, name: 'Charlie Brown', email: 'user5@example.com', role: 'Manager', status: 'Active' },
+  { id: 6, name: 'David Lee', email: 'user6@example.com', role: 'Manager', status: 'Inactive' },
+  { id: 7, name: 'Emma Davis', email: 'user7@example.com', role: 'Manager', status: 'Active' },
+  { id: 8, name: 'Frank Miller', email: 'user8@example.com', role: 'Manager', status: 'Inactive' },
+  { id: 9, name: 'Grace Wilson', email: 'user9@example.com', role: 'Manager', status: 'Active' },
+  { id: 10, name: 'Henry Johnson', email: 'user10@example.com', role: 'Manager', status: 'Inactive' },
+  { id: 11, name: 'Isabella Taylor', email: 'user11@example.com', role: 'Manager', status: 'Active' },
+  { id: 12, name: 'Jack Smith', email: 'user12@example.com', role: 'Manager', status: 'Inactive' },
 ];
 
 
@@ -95,6 +95,7 @@ const Page = () => {
           <thead className=" text-blue-400">
             <tr>
               <th className="py-3 px-4 text-left">ID</th>
+              <th className="py-3 px-4 text-left">Name</th>
               <th className="py-3 px-4 text-left">Email</th>
               <th className="py-3 px-4 text-left">Status</th>
               <th className="py-3 px-4 text-left">Role</th>
@@ -105,6 +106,7 @@ const Page = () => {
             {filteredUsers.map(user => (
               <tr key={user.id} className='hover:bg-white hover:text-black'>
                 <td className="py-3 px-4">{user.id}</td>
+                <td className="py-3 px-4">{user.name}</td>
                 <td className="py-3 px-4">{user.email}</td>
                 <td className={`py-3 px-4 ${user.status === 'Active' ? 'text-green-500' : 'text-red-500'}`}>
                   {user.status}
