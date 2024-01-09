@@ -66,6 +66,13 @@ const ManagerSidebar = () => {
         </li>
 
         <li className="mb-4">
+          <Link href="/manager/notifications">
+            <p className="flex items-center text-white hover:text-gray-300">
+              <FaBell className="mr-2" /> Notifications
+            </p>
+          </Link>
+        </li>
+        <li className="mb-4">
           <Link href="/manager/profile">
             <p className="flex items-center text-white hover:text-gray-300">
               <FaUserCircle className="mr-2" /> Profile
