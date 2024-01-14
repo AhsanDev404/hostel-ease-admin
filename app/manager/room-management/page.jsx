@@ -1,5 +1,28 @@
 "use client";
-import LoadMoreButton from "@/components/LoadMoreButton";
+import DataTable from "@/components/data-table";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { CaretSortIcon } from "@radix-ui/react-icons";
+import { PlusCircle } from "lucide-react";
 import React, { useState } from "react";
 
 // Example users data structure
@@ -19,7 +42,6 @@ const roomsData = [
   { id: 6, roomNumber: "106", capacity: 4, bookedSlots: 4, userId: null },
   // Add more rooms as needed
 ];
-
 const RoomManagementPage = () => {
   const [rooms, setRooms] = useState(roomsData);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,15 +49,31 @@ const RoomManagementPage = () => {
   const [statusFilter, setStatusFilter] = useState("All"); // 'All', 'Full', 'Available'
   const [searchUserId, setSearchUserId] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-
+  const [formData, setFormData] = useState({
+    price: "",
+    roomName: "",
+    capacity: 4,
+    size: "",
+    bedType: "",
+  });
   const handleCreateRoom = () => {
-    // Assuming you have a function to add a new room
-    // For example:
-    // setRooms([...rooms, { id: rooms.length + 1, roomNumber: newRoomNumber, capacity: 4, bookedSlots: 0, userId: null }]);
-    // Close the modal
+    const newRoom = {
+      id: rooms.length + 1,
+      roomNumber: formData.roomName,
+      capacity: formData.capacity,
+      bookedSlots: 0,
+      userId: null,
+      // Add more properties for other form fields
+    };
+
+    setRooms([...rooms, newRoom]);
     setIsModalOpen(false);
-    // Clear the input field
-    setNewRoomNumber("");
+    setFormData({
+      roomName: "",
+      capacity: 4,
+      size: "",
+      bedType: "",
+    });
   };
 
   const handleStatusChange = (roomId) => {
@@ -43,7 +81,8 @@ const RoomManagementPage = () => {
       if (room.id === roomId) {
         return {
           ...room,
-          bookedSlots: room.bookedSlots === room.capacity ? 0 : room.bookedSlots + 1,
+          bookedSlots:
+            room.bookedSlots === room.capacity ? 0 : room.bookedSlots + 1,
         };
       }
       return room;
@@ -58,21 +97,23 @@ const RoomManagementPage = () => {
 
   const getUserNameById = (userId) => {
     const user = usersData.find((user) => user.id === userId);
-    return user ? user.name : 'N/A';
+    return user ? user.name : "N/A";
   };
 
   const handleSearch = () => {
     const filteredRooms = rooms.filter((room) => {
-      const matchesStatus = statusFilter === "All" || calculateStatus(room) === statusFilter;
+      const matchesStatus =
+        statusFilter === "All" || calculateStatus(room) === statusFilter;
       const matchesUserId =
-        searchUserId === "" || (room.userId !== null && room.userId.toString().includes(searchUserId));
+        searchUserId === "" ||
+        (room.userId !== null && room.userId.toString().includes(searchUserId));
       return matchesStatus && matchesUserId;
     });
     setSearchResults(filteredRooms);
   };
-const calculateStatus = (room) => {
+  const calculateStatus = (room) => {
     if (room.bookedSlots === room.capacity) {
-      return 'No';
+      return "No";
     } else {
       return `${room.bookedSlots} / ${room.capacity}`;
     }
@@ -80,124 +121,228 @@ const calculateStatus = (room) => {
 
   const calculateAvailability = (room) => {
     console.log({
-      slots : room.bookedSlots,
-      cap : room.capacity, 
-      status : +room.bookedSlots === +room.capacity ? "NO" : "YES" 
-    })
+      slots: room.bookedSlots,
+      cap: room.capacity,
+      status: +room.bookedSlots === +room.capacity ? "NO" : "YES",
+    });
     return +room.bookedSlots === +room.capacity ? "NO" : "YES";
   };
 
+  const columns = [
+    {
+      accessorKey: "id",
+      header: "ID",
+      cell: ({ row }) => <div>{row.getValue("id")}</div>,
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          ID
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "roomNumber",
+      header: "Room Number",
+      cell: ({ row }) => <div>{row.getValue("roomNumber")}</div>,
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Room Number
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => <div>{calculateStatus(row.original)}</div>,
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "availability",
+      header: "Availability",
+      cell: ({ row }) => (
+        <div
+          className={`${
+            calculateAvailability(row.original) === "NO"
+              ? "text-red-500"
+              : "text-green-500"
+          }`}
+        >
+          {calculateAvailability(row.original)}
+        </div>
+      ),
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Availability
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "userId",
+      header: "User Name",
+      cell: ({ row }) => <div>{getUserNameById(row.original.userId)}</div>,
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          className="px-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          User Name
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "actions",
+      header: "Actions",
+      cell: ({ row }) => (
+        <div className="space-x-4">
+          <Button onClick={() => handleStatusChange(row.original.id)}>
+            Change Status
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={() => handleDeleteRoom(row.original.id)}
+          >
+            Delete
+          </Button>
+        </div>
+      ),
+    },
+  ];
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-4xl font-bold mb-8 text-center">Room Management</h1>
-      <div className="mb-4">
-        <label className="text-black mr-2">Filter by Status:</label>
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1 text-black"
-        >
-          <option value="All">All</option>
-          <option value="Full">Full</option>
-          <option value="Available">Available</option>
-        </select>
-      </div>
-      <div className="mb-4 flex items-center">
-        <label className="text-black mr-2">Search by User ID:</label>
-        <input
-          type="text"
-          placeholder="Enter User ID"
-          value={searchUserId}
-          onChange={(e) => setSearchUserId(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1 mr-2"
-        />
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-          onClick={handleSearch}
-        >
-          Search
-        </button>
-      </div>
-      <button
-        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mb-4"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Create Room
-      </button>
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-gray-800 text-white border rounded-lg overflow-hidden">
-          <thead className="text-blue-400">
-            <tr>
-              <th className="py-3 px-4 text-left">ID</th>
-              <th className="py-3 px-4 text-left">Room Number</th>
-              <th className="py-3 px-4 text-left">Status</th>
-              <th className="py-3 px-4 text-left">Availability</th>
-              <th className="py-3 px-4 text-left">User Name</th>
-              <th className="py-3 px-4 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rooms.map((room) => (
-              <tr key={room.id} className="hover:bg-white hover:text-black">
-                <td className="py-3 px-4">{room.id}</td>
-                <td className="py-3 px-4">{room.roomNumber}</td>
-                <td
-                  className={`py-3 px-4`}>
-                  {calculateStatus(room)}
-                </td>
-                <td className={`py-3 px-4 ${calculateAvailability(room) === 'NO' ? "text-red-500" : "text-green-500"}`}>
-                  {calculateAvailability(room)}
-                </td>
-                <td className="py-3 px-4">{getUserNameById(room.userId)}</td>
-                <td className="py-3 px-4">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-4 rounded mr-2"
-                    onClick={() => handleStatusChange(room.id)}
-                  >
-                    Change Status
-                  </button>
-                  <button
-                    className="bg-red-500 hover:bg-red-600 text-white py-1 px-4 rounded"
-                    onClick={() => handleDeleteRoom(room.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-{isModalOpen && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center">
-    <div className="modal-overlay fixed inset-0 bg-black opacity-50"></div>
-    <div className="modal-container bg-white w-full md:w-96 p-6 rounded-lg shadow-lg z-50">
-      <h2 className="text-2xl font-bold mb-4">Create Room</h2>
-      <input
-        type="text"
-        placeholder="Enter room number"
-        className="border border-gray-300 rounded px-3 py-2 mb-4 w-full"
-        value={newRoomNumber}
-        onChange={(e) => setNewRoomNumber(e.target.value)}
-      />
-      <div className="flex justify-end">
-        <button
-          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mr-2"
-          onClick={handleCreateRoom}
-        >
+      <div className="flex flex-row-reverse container -mb-20">
+        <Button onClick={() => setIsModalOpen(true)}>
+          <PlusCircle className="mr-2" />
           Create Room
-        </button>
-        <button
-className="text-sm text-gray-600 border border-gray-300 hover:bg-gray-100 py-2 px-4 rounded"
-          onClick={() => setIsModalOpen(false)}
-        >
-          Cancel
-        </button>
+        </Button>
       </div>
-    </div>
-  </div>
-)}
-      <LoadMoreButton />
+      <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Create Room</DialogTitle>
+            <DialogDescription>
+              Enter room details below and click save when you're done.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="roomName" className="text-right">
+                Room Name
+              </Label>
+              <Input
+                id="roomName"
+                type="text"
+                value={formData.roomName}
+                onChange={(e) =>
+                  setFormData({ ...formData, roomName: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="capacity" className="text-right">
+                Capacity
+              </Label>
+              <Input
+                id="capacity"
+                type="number"
+                value={formData.capacity}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    capacity: Number(e.target.value),
+                  })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="size" className="text-right">
+                Price
+              </Label>
+              <Input
+                id="price"
+                type="text"
+                value={formData.price}
+                onChange={(e) =>
+                  setFormData((pre) => ({ ...pre, price: e.target.value }))
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="size" className="text-right">
+                Size
+              </Label>
+              <Input
+                id="size"
+                type="text"
+                value={formData.size}
+                onChange={(e) =>
+                  setFormData({ ...formData, size: e.target.value })
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="bedType" className="text-right">
+                Bed Type
+              </Label>
+              <Select
+                value={formData.bedType}
+                onChange={(value) =>
+                  setFormData((pre) => ({
+                    ...pre,
+                    bedType: value,
+                  }))
+                }
+              >
+                <SelectTrigger className="w-[280px]">
+                  <SelectValue placeholder="Select bed type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="single">Single</SelectItem>
+                    <SelectItem value="double">Double</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button onClick={handleCreateRoom}>Create Room</Button>
+            <Button variant="outline" onClick={() => setIsModalOpen(false)}>
+              Cancel
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <DataTable data={rooms} columns={columns} />
     </div>
   );
 };
