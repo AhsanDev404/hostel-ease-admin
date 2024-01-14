@@ -55,6 +55,7 @@ const RoomManagementPage = () => {
     capacity: 4,
     size: "",
     bedType: "",
+    images: [],
   });
   const handleCreateRoom = () => {
     const newRoom = {
@@ -69,6 +70,7 @@ const RoomManagementPage = () => {
     setRooms([...rooms, newRoom]);
     setIsModalOpen(false);
     setFormData({
+      features: "",
       roomName: "",
       capacity: 4,
       size: "",
@@ -296,6 +298,20 @@ const RoomManagementPage = () => {
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="features" className="text-right">
+                Features
+              </Label>
+              <Input
+                id="features"
+                type="text"
+                value={formData.features}
+                onChange={(e) =>
+                  setFormData((pre) => ({ ...pre, features: e.target.value }))
+                }
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="size" className="text-right">
                 Size
               </Label>
@@ -332,6 +348,20 @@ const RoomManagementPage = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="images" className="text-right">
+                Images
+              </Label>
+              <Input
+                id="images"
+                type="file"
+                value={formData.images}
+                onChange={(e) =>
+                  setFormData({ ...formData, images: e.target.value })
+                }
+                className="col-span-3"
+              />
             </div>
           </div>
           <DialogFooter>
