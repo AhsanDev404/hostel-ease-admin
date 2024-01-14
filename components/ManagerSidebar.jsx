@@ -70,9 +70,9 @@ const ManagerSidebar = () => {
           </button>
         </li>
         <li className="mb-4">
-          <Link href="/manager/notifications">
+          <Link href="/manager/announcements">
             <p className="flex items-center text-white hover:text-gray-300">
-              <FaBell className="mr-2" /> Notifications
+              <FaBell className="mr-2" /> Announcements
             </p>
           </Link>
         </li>

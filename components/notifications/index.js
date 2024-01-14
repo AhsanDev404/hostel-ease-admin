@@ -33,11 +33,11 @@ export function NotificationSection({
       >
         <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
           <div className="px-4 py-2 flex justify-between w-full">
-            <h1 className="text-xl font-bold">Notifications</h1>
+            <h1 className="text-xl font-bold">Announcements</h1>
             <div className="">
               <Button variant="outline" disabled={!mail}>
-                <PlusCircle className="h-4 w-4 mr-2" /> Add Notification
-                <span className="sr-only">Create Notification</span>
+                <PlusCircle className="h-4 w-4 mr-2" /> Add Announcements
+                <span className="sr-only">Create Announcement</span>
               </Button>
             </div>
           </div>
