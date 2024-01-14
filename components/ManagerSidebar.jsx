@@ -55,13 +55,6 @@ const ManagerSidebar = () => {
         </li>
 
         <li className="mb-4">
-          <Link href="/manager/notifications">
-            <p className="flex items-center text-white hover:text-gray-300">
-              <FaBell className="mr-2" /> Notifications
-            </p>
-          </Link>
-        </li>
-        <li className="mb-4">
           <Link href="/manager/profile">
             <p className="flex items-center text-white hover:text-gray-300">
               <FaUserCircle className="mr-2" /> Profile
@@ -75,6 +68,20 @@ const ManagerSidebar = () => {
           >
             <FaSignOutAlt className="mr-2" /> Logout
           </button>
+        </li>
+        <li className="mb-4">
+          <Link href="/manager/notifications">
+            <p className="flex items-center text-white hover:text-gray-300">
+              <FaBell className="mr-2" /> Notifications
+            </p>
+          </Link>
+        </li>
+        <li className="mb-4">
+          <Link href="/manager/residential-listing">
+            <p className="flex items-center text-white hover:text-gray-300">
+              <FaBook className="mr-2" /> Residential Listing
+            </p>
+          </Link>
         </li>
         {/* Add more menu items as needed */}
       </ul>
