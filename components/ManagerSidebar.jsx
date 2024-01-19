@@ -1,40 +1,29 @@
 import { setUser } from "@/redux/slices/authSlice";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import {
   FaHome,
-  FaUser,
-  FaCog,
-  FaUsers,
   FaBed,
-  FaStar,
   FaBook,
-  FaExclamationCircle,
-  FaCity,
-  FaComments,
-  FaClipboardList,
-  FaCommentsDollar,
-  FaImages,
+  FaBell,
   FaUserCircle,
   FaSignOutAlt,
 } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-
 
 const ManagerSidebar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const logout = async () => {
     try {
-      const auth  = getAuth()
+      const auth = getAuth();
       await signOut(auth);
       dispatch(setUser(null));
-      router.push('/'); 
-     
+      router.push("/");
     } catch (authStateChangedError) {
-      console.error('Error in onAuthStateChanged:', authStateChangedError);
+      console.error("Error in onAuthStateChanged:", authStateChangedError);
     }
   };
   return (
@@ -73,9 +62,26 @@ const ManagerSidebar = () => {
           </Link>
         </li>
         <li className="mb-4">
-          <button onClick={()=>logout()} className="flex items-center text-white hover:text-gray-300">
+          <button
+            onClick={() => logout()}
+            className="flex items-center text-white hover:text-gray-300"
+          >
             <FaSignOutAlt className="mr-2" /> Logout
           </button>
+        </li>
+        <li className="mb-4">
+          <Link href="/manager/announcements">
+            <p className="flex items-center text-white hover:text-gray-300">
+              <FaBell className="mr-2" /> Announcements
+            </p>
+          </Link>
+        </li>
+        <li className="mb-4">
+          <Link href="/manager/residential-listing">
+            <p className="flex items-center text-white hover:text-gray-300">
+              <FaBook className="mr-2" /> Residential Listing
+            </p>
+          </Link>
         </li>
         {/* Add more menu items as needed */}
       </ul>
